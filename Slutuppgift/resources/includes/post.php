@@ -32,7 +32,7 @@ function slugify($slug, $strict = false) {
 
 if ($pdo) {
 
-    // Kommentar här
+    // vissar användarna på en lista, man kan använda det för att välja mellan vem vi vill posta med
     $sql = 'SELECT ID, Username FROM Users ORDER BY Username';
     $users = array();
     foreach ($pdo->query($sql) as $row) {
@@ -51,15 +51,15 @@ if ($pdo) {
     /********** genom variablerna $headline & $text. **********/
     /**********************************************************/
 
-    // Kommentar här
+    // här kollar vi om man har skrivt en post i fönstret, och sen kan man posta posten
     if (isset($_POST['submit'])) {
-        $user = $_POST['author']; //Kommentar här
-        $headline = $_POST['title']; //Kommentar här
+        $user = $_POST['author']; //här skickas namet av dem som har skrivit posten
+        $headline = $_POST['title']; // här skickas titlen på posten till serven
         $headline = trim($headline);
 
-        $slug = slugify($headline); //Kommentar här
+        $slug = slugify($headline); //här skapars en slug utav titeln på posten, och skickar den till servern
 
-        $text = $_POST['message']; //Kommentar här
+        $text = $_POST['message']; //här skickas det man mar skirvit i posten
 
         $sql = 'INSERT INTO Posts (User_ID, Slug, Headline, Text) VALUES ("'.$user.'", "'.$slug.'", "'.$headline.'", "'.$text.'")';
 
@@ -72,7 +72,7 @@ if ($pdo) {
         /* databasen. Tänk på att namn på tabell & kolumner i er **/
         /* databas kan skiljas något från det jag angivit i $sql. */
         /**********************************************************/
-        if(condition) {
+        if($pdo->query($sql)) {
             $message = 'Du har lyckats lägga upp ett inlägg';
         }
 

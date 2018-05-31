@@ -1,14 +1,14 @@
 <?php
-require 'resources/includes/db_conn.php'; // Kommentar här
+require 'resources/includes/db_conn.php'; // includerar samman kompling till databasen
 
 if ($pdo) {
 
-    // Kommentar här
+    // skapar en nu variabel som till låter oss att dra en post direkt från databasen och visa den
     $sql = 'SELECT P.ID, P.Slug, P.Headline, CONCAT(U.Firstname, " ", U.Lastname) AS Name, P.Creation_time, P.Text FROM Posts AS P JOIN Users AS U ON U.ID = P.User_ID ORDER BY P.Creation_time DESC';
 
-    // Kommentar här
+    //  vi kollar utifall vi söker efter någonting
     if (isset($_POST['search'])) {
-        // Kommentar här
+        // sätt data till what
         $data = $_POST['what'];
 
         /**********************************************************/
@@ -41,16 +41,16 @@ if ($pdo) {
         /***** texter som innehåller både "Lorum" och "Ipsum." ****/
         /**********************************************************/
 
-        // Kommentar här
+        // om vi inte söker på något så visas all posts
         if (!empty($data)) {
             $sql = 'SELECT p.ID, p.Slug, p.Headline, CONCAT(u.Firstname, " ", u.Lastname) AS Name, p.Creation_time, p.Text FROM Posts AS p JOIN Users AS u ON U.ID = P.User_ID WHERE p.Text LIKE "%'.$data.'%" ORDER BY P.Creation_time DESC';
         }
     }
 
-    // Kommentar här
+    // skapar model-array
     $model = array();
     foreach($pdo->query($sql) as $row) {
-        // Kommentar här
+        // bygger up arrayesn model, så man kan klicka på en post ochden visas 
         $model += array(
             $row['ID'] => array(
                 'slug' => $row['Slug'],
